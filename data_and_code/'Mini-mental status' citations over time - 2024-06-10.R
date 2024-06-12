@@ -52,48 +52,49 @@ topic <- 'MMSE'
 
 if (topic == 'MMSE'){
   #* MMSE and dementia ------
-  filename <- "PubMed_Timeline_Results_by_Year - ‘Mini-mental status’tiab - 'dementia'tiab - medline - FINAL - 2024-06-09.csv"
+  filename <- "PubMed_Timeline_Results_by_Year - ‘Mini-mental status’[tiab] - 'dementia'[tiab] - medline - FINAL - 2024-06-09.csv"
   main_title <- paste0("Citations per year with ",
                        "'mini-mental status'[tiab]\n",
                        "in 'dementia' and MEDLINE since 1990")
   factor <- 100
-  y_label <- "MMSE\u2020 Citations per 1k MEDLINE citations with 'dementia'[tiab]"
-  note <- paste0("2001: PAR* acquires rights to the MMSE\u2020\n",
+  y_label <- "MMSE* Citations per 1k citations with 'dementia'"
+  note <- paste0("2001: PAR\u2020 acquires rights to the MMSE\u2020\n",
                  "2004: NIH drafts Public Access Policy\n",
                  "2006: NIH Public Access Policy implemented\n",
                  "2007: VA starts seeking alternatives to MMSE\n")
-  note1 <- "* PAR, Inc.Psychological Assessment Resources."
-  note2 <- "\u2020 MMSE. Mini-mental status examination."
+  note1 <- "* MMSE. Mini-mental status examination."
+  note2 <- "\u2020 PAR, Inc.Psychological Assessment Resources."
 }
 if (topic == 'MBI'){
   #* MBI and burnout ------
-  filename <- "PubMed_Timeline_Results_by_Year - ‘Maslach burnout’tiab - 'burnout'tiab - medline - FINAL - 2024-06-09.csv"
+  filename <- "PubMed_Timeline_Results_by_Year - ‘Maslach burnout’[tiab] - 'burnout'[tiab] - medline - FINAL - 2024-06-09.csv"
   main_title <- paste0("Citations per year with ",
-                       "'Maslach burnout'[tiab]\n",
-                       "in 'burnout' and MEDLINE since 1990")
+               "'Maslach burnout'[tiab]\n",
+               "in 'burnout' and MEDLINE since 1990")
   factor <- 100
-  y_label <- "MGI*"
-  note <- paste0("1996: MGI* acquires rights to the MBI.\n",
+  y_label <- "MBI* Citations per 1k citations with 'burnout'"
+  note <- paste0("1996: MGI\u2020 acquires rights to the MBI.\n",
                  "2004: NIH drafts Public Access Policy\n",
                  "2006: NIH Public Access Policy implemented")
-  y_label <- "MBI\u2020 Citations per 1k MEDLINE citations with 'burnout'[tiab]"
-  note1 <- "* MGI Mind Garden, Inc."
-  note2 <- "\u2020MBI. Maslach Burnout Inventory."
+  note1 <- "* MBI. Maslach Burnout Inventory."
+  note2 <- "\u2020 MGI Mind Garden, Inc."
 }
 
 if (topic == 'PHQ-9'){
   #* PHQ-9 and depression ------
-  filename <- "PubMed_Timeline_Results_by_Year - ‘PHQ-9’tiab - depressive disorder'tiab' - medline - FINAL - 2024-06-08.csv"
+  filename <- "PubMed_Timeline_Results_by_Year - ‘PHQ-9’[tiab] - 'depressive disorder'[tiab] - medline - FINAL - 2024-06-10.csv"
   main_title <- paste0("Citations per year with 'PHQ-9'[tiab]\n",
                        "in 'depressive disorders' and MEDLINE since 1990")
   factor <- 100
-  y_label <- "PHQ-9*"
-  note <- paste0("Pfizer* owns the copyright to the PHQ-9 and in\n",
+  y_label <- "PHQ-9* Citations per 1k citations with 'depressive disorder'"
+  note <- paste0("Pfizer\u2020 owns the copyright to the PHQ-9 and in\n",
                  " 2005 creates phqscreeners.com to host free access.")
-  y_label <- "PHQ-9\u2020 Citations per 1k MEDLINE citations with 'depressive disorder'[MeSH]"
-  note1 <- "* Pfizer Inc."
-  note2 <- "\u2020PHQ-9. Patient Health Questionnaire."
+  note1 <- "* PHQ-9. Patient Health Questionnaire."
+  note2 <- "\u2020 Pfizer Inc."
 }
+
+# For journal publication
+main_title <- ""
 
 # GET DATA -----
 #data.medline <- read_csv("PubMed_Timeline_Results_by_Year - 'mini-mental status'[tiab] - 2024-06-08.csv")
@@ -256,7 +257,9 @@ best_model_p_value_0_knots <- as.numeric(best_model_p_value_0_knots)
 best_model_knot <- best_model_row$most_important_knot
 
 # PLOT with the data points ------
-par(mar = c(5.1 + 2, 4.1, 4.1, 2.1), mfrow = c(1, 1)) # (bottom, left, top, right)
+# par(mar = c(5.1 + 2, 4.1, 4.1, 2.1), mfrow = c(1, 1)) # (bottom, left, top, right)
+# For journal publication
+par(mar = c(5.1 + 2, 4.1, 4.1 - 2, 2.1), mfrow = c(1, 1)) # (bottom, left, top, right)
 
 #* Plot ------
 plot(data.medline$Year, data.medline$Survey.rate, type = "p", 
@@ -316,13 +319,25 @@ text(x = ifelse(topic=='PHQ-9', 2000, best_model_knot + 1),
      adj = c(0, 0), # 0 for left/bottom, 1 for right/top, and 0.5 for centered
      cex = 0.8, font = 1)
 
-# Add footnotes
-mtext("Footnotes:", side = 1, line = 4, adj = 0, cex = 0.8, font = 2)
+#* Footnotes -----
+mtext("Footnotes:", side = 1, line = 3, adj = 0, cex = 0.8, font = 2)
+if (topic=='MMSE'){mtext(paste0("PubMed searches were MEDLINE[sb] AND: ",
+    "numerator: \"Mini-mental status\"[TIAB]",
+    "; denominator: \"dementia\"[TIAB]")
+  , side = 1, line = 4, adj = 0, cex = 0.8)}
+if (topic=='MBI'){mtext(paste0("PubMed searches were MEDLINE[sb] AND: ",
+     "numerator: \"Maslach burnout\"[TIAB]",
+     "; denominator: \"burnout\"[TIAB]")
+    , side = 1, line = 4, adj = 0, cex = 0.8)}
+if (topic=='PHQ-9'){mtext(paste0("PubMed searches were MEDLINE[sb] AND: ",
+     "numerator: \"PHQ-9\"[TIAB]",
+     "; denominator: \"depressive disorder\"[MeSH]")
+    , side = 1, line = 4, adj = 0, cex = 0.8)}
 mtext(note1, side = 1, line = 5, adj = 0, cex = 0.8)
 mtext(note2, side = 1, line = 6, adj = 0, cex = 0.8)
 
 # Print -----
-function_plot_print(filename, 600, 800)
+function_plot_print(filename, 610, 800)
 # Print the data.summary data frame
 print(data.summary)
 
