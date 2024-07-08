@@ -2,7 +2,7 @@
 
 Shortcut to this repository: https://ebmgt.github.io/copyright_case_studies
 
-This project is three quantitative case studies of varying approach to copyright restrictions and long-term consequencies. This project is being submitted for publication.
+This project is four quantitative case studies of varying approachwa to copyright restrictions and long-term consequencies. This project is being submitted for publication.
 
 <ul>
   <li><a href="https://ebmgt.github.io/copyright_case_studies/data_and_code">Data and code</a></li>
